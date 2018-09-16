@@ -10,7 +10,7 @@ import java.util.*
 /**
  * A default Badger impl for unsupported launchers
  */
-class DefaultBadger constructor(cName: ComponentName) : Badger {
+open class DefaultBadger constructor(cName: ComponentName) : Badger {
 
     private var componentName: ComponentName = cName
 

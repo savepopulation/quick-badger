@@ -4,21 +4,11 @@ import android.content.ComponentName
 import android.content.Context
 import com.raqun.easybadger.Badger
 
-class LgBadger : Badger {
-    override fun showBadge(context: Context, count: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class LgBadger(componentName: ComponentName) : DefaultBadger(componentName) {
 
-    override fun dismissBadge(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 
-    override fun getSupportedLaunchers(): List<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    companion object {
+        private val supportedLaunchers = listOf("com.lge.launcher", "com.lge.launcher2")
     }
-
-    override fun setComponentName(componentName: ComponentName) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }
