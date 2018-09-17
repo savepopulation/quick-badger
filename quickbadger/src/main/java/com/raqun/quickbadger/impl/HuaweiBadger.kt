@@ -7,12 +7,12 @@ import com.raqun.easybadger.Badger
 import android.os.Bundle
 
 
-class HuaweiBadger(componentName: ComponentName) : DefaultBadger(componentName) {
+class HuaweiBadger(private val componentName: ComponentName) : Badger {
 
     override fun showBadge(context: Context, count: Int) {
         val localBundle = Bundle()
-        localBundle.putString(BUNDLE_PACKAGE, getComponentName().packageName)
-        localBundle.putString(BUNDLE_CLASS, getComponentName().className)
+        localBundle.putString(BUNDLE_PACKAGE, componentName.packageName)
+        localBundle.putString(BUNDLE_CLASS, componentName.className)
         localBundle.putInt(BUNDLE_BADGE_NUMBER, count)
         try {
             context.contentResolver.call(Uri.parse(HUAWEI_LAUNCHER_URI), HUAWEI_BADGE_ACTION, null, localBundle)
@@ -20,6 +20,8 @@ class HuaweiBadger(componentName: ComponentName) : DefaultBadger(componentName) 
             //ignored
         }
     }
+
+    override fun dismissBadge(context: Context) = showBadge(context, 0)
 
     override fun getSupportedLaunchers(): List<String> = listOf("com.huawei.android.launcher")
 

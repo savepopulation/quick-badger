@@ -9,6 +9,4 @@ interface Badger {
     fun dismissBadge(context: Context)
 
     fun getSupportedLaunchers(): List<String>
-
-    fun setComponentName(componentName: ComponentName)
 }
