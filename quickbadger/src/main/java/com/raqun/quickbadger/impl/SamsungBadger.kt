@@ -16,9 +16,4 @@ class SamsungBadger : Badger {
     override fun getSupportedLaunchers(): List<String> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun setComponentName(componentName: ComponentName) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }

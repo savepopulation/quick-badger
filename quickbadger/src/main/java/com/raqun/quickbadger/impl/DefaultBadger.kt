@@ -24,9 +24,7 @@ open class DefaultBadger constructor(private val componentName: ComponentName) :
         }
     }
 
-    override fun dismissBadge(context: Context) {
-        showBadge(context, 0)
-    }
+    override fun dismissBadge(context: Context) = showBadge(context, 0)
 
     override fun getSupportedLaunchers(): List<String> = ArrayList()
 
