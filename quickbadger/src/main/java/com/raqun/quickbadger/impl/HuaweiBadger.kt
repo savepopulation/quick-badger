@@ -10,10 +10,12 @@ import android.os.Bundle
 class HuaweiBadger(private val componentName: ComponentName) : Badger {
 
     override fun showBadge(context: Context, count: Int) {
-        val localBundle = Bundle()
-        localBundle.putString(BUNDLE_PACKAGE, componentName.packageName)
-        localBundle.putString(BUNDLE_CLASS, componentName.className)
-        localBundle.putInt(BUNDLE_BADGE_NUMBER, count)
+        val localBundle = Bundle().apply {
+            putString(BUNDLE_PACKAGE, componentName.packageName)
+            putString(BUNDLE_CLASS, componentName.className)
+            putInt(BUNDLE_BADGE_NUMBER, count)
+        }
+
         try {
             context.contentResolver.call(Uri.parse(HUAWEI_LAUNCHER_URI), HUAWEI_BADGE_ACTION, null, localBundle)
         } catch (e: Exception) {
