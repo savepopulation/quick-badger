@@ -36,6 +36,8 @@ open class DefaultBadger constructor(cName: ComponentName) : Badger {
         this.componentName = componentName
     }
 
+    fun getComponentName() = componentName
+
     companion object {
         private const val INTENT_ACTION = "android.intent.action.BADGE_COUNT_UPDATE"
         private const val INTENT_EXTRA_BADGE_COUNT = "badge_count"
