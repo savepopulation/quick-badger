@@ -2,18 +2,75 @@ package com.raqun.quickbadger.impl
 
 import android.content.ComponentName
 import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 import com.raqun.easybadger.Badger
+import com.raqun.quickbadger.util.Util
+import android.content.ContentValues
+import android.support.annotation.NonNull
+import java.lang.Exception
 
-class SamsungBadger : Badger {
+
+class SamsungBadger(componentName: ComponentName) : DefaultBadger(componentName) {
+
     override fun showBadge(context: Context, count: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (Util.hasLollipop()) {
+            super.showBadge(context, count)
+        } else {
+            val contentUri = Uri.parse(CONTENT_URI_STRING)
+            var cursor: Cursor? = null
+            try {
+                cursor = context.contentResolver.query(contentUri,
+                        CONTENT_PROJECTION,
+                        "package=?",
+                        arrayOf(componentName.packageName),
+                        null)
+
+                cursor?.let {
+                    var isEntryActivityExists = false
+                    while (cursor.moveToNext()) {
+                        val id = cursor.getInt(0)
+                        val contentValues = getContentValues(componentName, count, false)
+                        context.contentResolver.update(contentUri, contentValues, "_id=?", arrayOf(id.toString()))
+                        if (componentName.className == cursor.getString(cursor.getColumnIndex(CLASS_COLUMN))) {
+                            isEntryActivityExists = true
+                        }
+                    }
+
+                    if (!isEntryActivityExists) {
+                        val contentValues = getContentValues(componentName, count, true)
+                        context.contentResolver.insert(contentUri, contentValues)
+                    }
+                }
+            } catch (e: Exception) {
+                // ignored
+            } finally {
+                if (cursor != null && !cursor.isClosed) {
+                    cursor.close()
+                }
+            }
+        }
     }
 
-    override fun dismissBadge(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 
-    override fun getSupportedLaunchers(): List<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun getContentValues(componentName: ComponentName, badgeCount: Int, isInsert: Boolean): ContentValues =
+            ContentValues().apply {
+                if (isInsert) {
+                    put(KEY_PACKAGE, componentName.packageName)
+                    put(KEY_CLASS, componentName.className)
+                }
+                put(KEY_BADGE_COUNT, badgeCount)
+            }
+
+    companion object {
+        private val supportedLaunchers = listOf("com.sec.android.app.launcher", "com.sec.android.app.twlauncher")
+        private val CONTENT_PROJECTION = arrayOf("_id", "class")
+
+        private const val CONTENT_URI_STRING = "content://com.sec.badge/apps?notify=true"
+        private const val KEY_PACKAGE = "package"
+        private const val KEY_CLASS = "class"
+        private const val KEY_BADGE_COUNT = "badgecount"
+        private const val CLASS_COLUMN = "class"
     }
 }

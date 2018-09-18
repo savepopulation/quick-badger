@@ -10,7 +10,7 @@ import java.util.*
 /**
  * A default Badger impl for unsupported launchers
  */
-open class DefaultBadger constructor(private val componentName: ComponentName) : Badger {
+open class DefaultBadger constructor(val componentName: ComponentName) : Badger {
 
     override fun showBadge(context: Context, count: Int) {
         val badgeIntent = Intent(INTENT_ACTION).apply {

@@ -25,9 +25,10 @@ class HuaweiBadger(private val componentName: ComponentName) : Badger {
 
     override fun dismissBadge(context: Context) = showBadge(context, 0)
 
-    override fun getSupportedLaunchers(): List<String> = listOf("com.huawei.android.launcher")
+    override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 
     companion object {
+        private val supportedLaunchers = listOf("com.huawei.android.launcher")
         private const val HUAWEI_LAUNCHER_URI = "content://com.huawei.android.launcher.settings/badge/"
         private const val HUAWEI_BADGE_ACTION = "change_badge"
         private const val BUNDLE_PACKAGE = "package"
