@@ -1,11 +1,11 @@
 package com.raqun.quickbadger.impl
 
-import android.content.ComponentName
-import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.content.*
 import android.net.Uri
+import android.os.Looper
 import com.raqun.easybadger.Badger
+import com.raqun.quickbadger.ext.isMainLooper
 import com.raqun.quickbadger.ext.providerExists
 
 class SonyBadger(private val componentName: ComponentName) : Badger {
@@ -25,8 +25,24 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
 
     private fun showBadgeWithContentProvider(context: Context,
                                              contentValues: ContentValues) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (Looper.myLooper().isMainLooper()) {
+            showBadgeAsync(context, contentValues)
+        } else {
+            showBadgeSync(context, contentValues)
+        }
     }
+
+    @SuppressLint("HandlerLeak")
+    private fun showBadgeAsync(context: Context, contentValues: ContentValues) {
+        if (queryHandler == null) {
+            queryHandler = object : AsyncQueryHandler(context.applicationContext.contentResolver) {}
+        }
+
+        queryHandler!!.startInsert(0, null, BADGE_CONTENT_URI, contentValues)
+    }
+
+    private fun showBadgeSync(context: Context, contentValues: ContentValues) =
+            context.applicationContext.contentResolver.insert(BADGE_CONTENT_URI, contentValues)
 
     private fun showBadgeWithBroadcast(context: Context, count: Int) =
             context.sendBroadcast(Intent(INTENT_ACTION).apply {
@@ -34,7 +50,6 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
                 putExtra(INTENT_EXTRA_PACKAGE_NAME, componentName.packageName)
                 putExtra(INTENT_EXTRA_SHOW_MESSAGE, count > 0)
                 putExtra(INTENT_EXTRA_MESSAGE, count.toString())
-
             })
 
     private fun createContentValues(componentName: ComponentName, count: Int) =
@@ -56,7 +71,9 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
         private const val PROVIDER_COLUMNS_PACKAGE_NAME = "package_name"
         private const val PROVIDER_COLUMNS_ACTIVITY_NAME = "activity_name"
         private const val SONY_HOME_PROVIDER_NAME = "com.sonymobile.home.resourceprovider"
+
         private val BADGE_CONTENT_URI = Uri.parse(PROVIDER_CONTENT_URI)
         private val supportedLaunchers = listOf("com.sonyericsson.home", "com.sonymobile.home")
+        private var queryHandler: AsyncQueryHandler? = null
     }
 }
