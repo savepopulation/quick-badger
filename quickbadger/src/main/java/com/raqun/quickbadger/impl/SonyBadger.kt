@@ -3,6 +3,7 @@ package com.raqun.quickbadger.impl
 import android.content.ComponentName
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import com.raqun.easybadger.Badger
 import com.raqun.quickbadger.ext.providerExists
@@ -14,7 +15,7 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
         if (context.providerExists(SONY_HOME_PROVIDER_NAME)) {
             showBadgeWithContentProvider(context, contentValues)
         } else {
-            showBadgeWithBroadcast(context, contentValues)
+            showBadgeWithBroadcast(context, count)
         }
     }
 
@@ -27,9 +28,14 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun showBadgeWithBroadcast(context: Context, contentValues: ContentValues) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private fun showBadgeWithBroadcast(context: Context, count: Int) =
+            context.sendBroadcast(Intent(INTENT_ACTION).apply {
+                putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName.className)
+                putExtra(INTENT_EXTRA_PACKAGE_NAME, componentName.packageName)
+                putExtra(INTENT_EXTRA_SHOW_MESSAGE, count > 0)
+                putExtra(INTENT_EXTRA_MESSAGE, count.toString())
+
+            })
 
     private fun createContentValues(componentName: ComponentName, count: Int) =
             ContentValues().apply {
