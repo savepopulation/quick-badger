@@ -29,7 +29,7 @@ open class DefaultBadger constructor(val componentName: ComponentName) : Badger 
     override fun getSupportedLaunchers(): List<String> = ArrayList()
 
     companion object {
-        private const val INTENT_ACTION = "android.intent.action.BADGE_COUNT_UPDATE"
+        const val INTENT_ACTION = "android.intent.action.BADGE_COUNT_UPDATE"
         private const val INTENT_EXTRA_BADGE_COUNT = "badge_count"
         private const val INTENT_EXTRA_PACKAGENAME = "badge_count_package_name"
         private const val INTENT_EXTRA_ACTIVITY_NAME = "badge_count_class_name"
