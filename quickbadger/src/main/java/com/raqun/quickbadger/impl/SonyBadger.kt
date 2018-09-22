@@ -8,7 +8,9 @@ import com.raqun.easybadger.Badger
 import com.raqun.quickbadger.ext.isMainLooper
 import com.raqun.quickbadger.ext.providerExists
 
-class SonyBadger(private val componentName: ComponentName) : Badger {
+class SonyBadger(compName: ComponentName) : Badger {
+
+    private var componentName: ComponentName = compName
 
     override fun showBadge(context: Context, count: Int) {
         val contentValues = createContentValues(componentName, count)
@@ -22,6 +24,10 @@ class SonyBadger(private val componentName: ComponentName) : Badger {
     override fun dismissBadge(context: Context) = showBadge(context, 0)
 
     override fun getSupportedLaunchers(): List<String> = supportedLaunchers
+
+    override fun initComponentName(componentName: ComponentName) {
+        this.componentName = componentName
+    }
 
     private fun showBadgeWithContentProvider(context: Context,
                                              contentValues: ContentValues) {

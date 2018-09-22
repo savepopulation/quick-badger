@@ -9,6 +9,7 @@ import com.raqun.quickbadger.ext.isBadgerValid
 import com.raqun.quickbadger.ext.isSupported
 import com.raqun.quickbadger.impl.*
 import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 object QuickBadger {
 
@@ -70,7 +71,8 @@ object QuickBadger {
         var launcherBadger: Badger? = null
         for (supportedBadger in supportedBadgers) {
             try {
-                launcherBadger = supportedBadger.objectInstance
+                launcherBadger = supportedBadger.createInstance()
+                launcherBadger.initComponentName(componentName)
             } catch (e: InstantiationException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {
@@ -79,13 +81,12 @@ object QuickBadger {
 
             if (launcherBadger != null && launcherBadger.isBadgerValid(currentHomePackage)) {
                 badger = launcherBadger
-                //TODO update component name
                 break
             }
         }
 
         /**
-         * If cannot instantiate try to return a default badger
+         * If cannot instantiate check if default badger is supported and return it.
          */
         if (badger == null) {
             launcherBadger = DefaultBadger(componentName)

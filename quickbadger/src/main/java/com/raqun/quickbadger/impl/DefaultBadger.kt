@@ -10,13 +10,15 @@ import java.util.*
 /**
  * A default Badger impl for unsupported launchers
  */
-open class DefaultBadger constructor(val componentName: ComponentName) : Badger {
+open class DefaultBadger(compName: ComponentName) : Badger {
+
+    protected var componentName = compName
 
     override fun showBadge(context: Context, count: Int) {
         val badgeIntent = Intent(INTENT_ACTION).apply {
             putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName.className)
             putExtra(INTENT_EXTRA_PACKAGENAME, componentName.packageName)
-            putExtra(INTENT_EXTRA_BADGE_COUNT, count);
+            putExtra(INTENT_EXTRA_BADGE_COUNT, count)
         }
 
         if (context.canResolveBroadcast(badgeIntent)) {
@@ -27,6 +29,10 @@ open class DefaultBadger constructor(val componentName: ComponentName) : Badger 
     override fun dismissBadge(context: Context) = showBadge(context, 0)
 
     override fun getSupportedLaunchers(): List<String> = ArrayList()
+
+    override fun initComponentName(componentName: ComponentName) {
+        this.componentName = componentName
+    }
 
     companion object {
         const val INTENT_ACTION = "android.intent.action.BADGE_COUNT_UPDATE"
