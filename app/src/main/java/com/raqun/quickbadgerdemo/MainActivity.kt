@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
          * Quick Badger Usage
          */
 
-        QuickBadger.provideBadger(this)?.showBadge(this, 10)
+        QuickBadger.provideBadger(this)?.showBadge( 10)
     }
 }
