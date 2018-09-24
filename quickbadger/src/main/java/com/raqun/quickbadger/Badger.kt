@@ -4,9 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 
 interface Badger {
-    fun showBadge(context: Context, count: Int)
+    fun showBadge(count: Int)
 
-    fun dismissBadge(context: Context)
+    fun dismissBadge()
 
     fun getSupportedLaunchers(): List<String>
 

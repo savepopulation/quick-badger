@@ -15,7 +15,7 @@ open class DefaultBadger(compName: ComponentName, con: Context) : Badger {
     protected var componentName = compName
     protected var context = con.applicationContext!!
 
-    override fun showBadge(context: Context, count: Int) {
+    override fun showBadge(count: Int) {
         val badgeIntent = Intent(INTENT_ACTION).apply {
             putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName.className)
             putExtra(INTENT_EXTRA_PACKAGENAME, componentName.packageName)
@@ -27,7 +27,7 @@ open class DefaultBadger(compName: ComponentName, con: Context) : Badger {
         }
     }
 
-    override fun dismissBadge(context: Context) = showBadge(context, 0)
+    override fun dismissBadge() = showBadge(0)
 
     override fun getSupportedLaunchers(): List<String> = ArrayList()
 

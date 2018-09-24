@@ -13,7 +13,7 @@ class SonyBadger(compName: ComponentName, con: Context) : Badger {
     private var componentName: ComponentName = compName
     private var context: Context = con.applicationContext
 
-    override fun showBadge(context: Context, count: Int) {
+    override fun showBadge(count: Int) {
         val contentValues = createContentValues(componentName, count)
         if (context.providerExists(SONY_HOME_PROVIDER_NAME)) {
             showBadgeWithContentProvider(context, contentValues)
@@ -22,7 +22,7 @@ class SonyBadger(compName: ComponentName, con: Context) : Badger {
         }
     }
 
-    override fun dismissBadge(context: Context) = showBadge(context, 0)
+    override fun dismissBadge() = showBadge(0)
 
     override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 

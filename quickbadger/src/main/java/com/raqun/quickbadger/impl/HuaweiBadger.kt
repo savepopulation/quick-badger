@@ -15,7 +15,7 @@ class HuaweiBadger(compName: ComponentName, con: Context) : Badger {
     private var context = con.applicationContext
         get() = context
 
-    override fun showBadge(context: Context, count: Int) {
+    override fun showBadge(count: Int) {
         val localBundle = Bundle().apply {
             putString(BUNDLE_PACKAGE, componentName.packageName)
             putString(BUNDLE_CLASS, componentName.className)
@@ -29,7 +29,7 @@ class HuaweiBadger(compName: ComponentName, con: Context) : Badger {
         }
     }
 
-    override fun dismissBadge(context: Context) = showBadge(context, 0)
+    override fun dismissBadge() = showBadge(0)
 
     override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 

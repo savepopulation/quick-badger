@@ -13,9 +13,9 @@ import java.lang.Exception
 
 class SamsungBadger(compName: ComponentName, con: Context) : DefaultBadger(compName, con) {
 
-    override fun showBadge(context: Context, count: Int) {
+    override fun showBadge(count: Int) {
         if (Util.hasLollipop()) {
-            super.showBadge(context, count)
+            super.showBadge(count)
         } else {
             val contentUri = Uri.parse(CONTENT_URI_STRING)
             var cursor: Cursor? = null
