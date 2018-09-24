@@ -73,6 +73,7 @@ object QuickBadger {
             try {
                 launcherBadger = supportedBadger.createInstance()
                 launcherBadger.initComponentName(componentName)
+                launcherBadger.initContext(context)
             } catch (e: InstantiationException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {
