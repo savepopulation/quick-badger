@@ -3,8 +3,8 @@ package com.raqun.quickbadger.impl
 import android.content.ComponentName
 import android.content.Context
 import android.net.Uri
-import com.raqun.easybadger.Badger
 import android.os.Bundle
+import com.raqun.quickbadger.Badger
 
 
 class HuaweiBadger(compName: ComponentName, con: Context) : Badger {

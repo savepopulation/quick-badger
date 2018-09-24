@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
-import com.raqun.easybadger.Badger
 import com.raqun.quickbadger.ext.isBadgerValid
 import com.raqun.quickbadger.ext.isSupported
 import com.raqun.quickbadger.impl.*

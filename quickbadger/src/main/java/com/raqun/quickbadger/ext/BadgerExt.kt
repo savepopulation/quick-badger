@@ -2,7 +2,7 @@ package com.raqun.quickbadger.ext
 
 import android.content.Context
 import android.content.Intent
-import com.raqun.easybadger.Badger
+import com.raqun.quickbadger.Badger
 import com.raqun.quickbadger.impl.DefaultBadger
 
 fun Badger.isBadgerValid(homePackage: String) =

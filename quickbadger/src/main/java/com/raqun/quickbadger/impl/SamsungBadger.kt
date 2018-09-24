@@ -4,7 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import com.raqun.easybadger.Badger
 import com.raqun.quickbadger.util.Util
 import android.content.ContentValues
 import android.support.annotation.NonNull

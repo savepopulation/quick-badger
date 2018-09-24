@@ -3,7 +3,7 @@ package com.raqun.quickbadger.impl
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import com.raqun.easybadger.Badger
+import com.raqun.quickbadger.Badger
 import com.raqun.quickbadger.ext.canResolveBroadcast
 import java.util.*
 

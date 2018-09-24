@@ -1,4 +1,4 @@
-package com.raqun.easybadger
+package com.raqun.quickbadger
 
 import android.content.ComponentName
 import android.content.Context

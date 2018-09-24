@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.net.Uri
 import android.os.Looper
-import com.raqun.easybadger.Badger
+import com.raqun.quickbadger.Badger
 import com.raqun.quickbadger.ext.isMainLooper
 import com.raqun.quickbadger.ext.providerExists
 
