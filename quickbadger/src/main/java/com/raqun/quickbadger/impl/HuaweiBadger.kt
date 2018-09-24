@@ -7,10 +7,13 @@ import com.raqun.easybadger.Badger
 import android.os.Bundle
 
 
-class HuaweiBadger(compName: ComponentName) : Badger {
+class HuaweiBadger(compName: ComponentName, con: Context) : Badger {
 
     private var componentName = compName
         get() = componentName
+
+    private var context = con.applicationContext
+        get() = context
 
     override fun showBadge(context: Context, count: Int) {
         val localBundle = Bundle().apply {
@@ -32,6 +35,10 @@ class HuaweiBadger(compName: ComponentName) : Badger {
 
     override fun initComponentName(componentName: ComponentName) {
         this.componentName = componentName
+    }
+
+    override fun initContext(context: Context) {
+        this.context = context.applicationContext
     }
 
     companion object {

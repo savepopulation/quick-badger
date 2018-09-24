@@ -11,4 +11,6 @@ interface Badger {
     fun getSupportedLaunchers(): List<String>
 
     fun initComponentName(componentName: ComponentName)
+
+    fun initContext(context: Context)
 }

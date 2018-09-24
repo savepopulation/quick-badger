@@ -4,7 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import com.raqun.easybadger.Badger
 
-class LgBadger(compName: ComponentName) : DefaultBadger(compName) {
+class LgBadger(compName: ComponentName, con: Context) : DefaultBadger(compName, con) {
 
     override fun getSupportedLaunchers(): List<String> = supportedLaunchers
 

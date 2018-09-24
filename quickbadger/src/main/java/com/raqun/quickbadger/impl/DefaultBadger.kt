@@ -10,9 +10,10 @@ import java.util.*
 /**
  * A default Badger impl for unsupported launchers
  */
-open class DefaultBadger(compName: ComponentName) : Badger {
+open class DefaultBadger(compName: ComponentName, con: Context) : Badger {
 
     protected var componentName = compName
+    protected var context = con.applicationContext!!
 
     override fun showBadge(context: Context, count: Int) {
         val badgeIntent = Intent(INTENT_ACTION).apply {
@@ -32,6 +33,10 @@ open class DefaultBadger(compName: ComponentName) : Badger {
 
     override fun initComponentName(componentName: ComponentName) {
         this.componentName = componentName
+    }
+
+    override fun initContext(context: Context) {
+        this.context = context.applicationContext
     }
 
     companion object {

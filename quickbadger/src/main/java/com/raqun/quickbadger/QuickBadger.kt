@@ -89,7 +89,7 @@ object QuickBadger {
          * If cannot instantiate check if default badger is supported and return it.
          */
         if (badger == null) {
-            launcherBadger = DefaultBadger(componentName)
+            launcherBadger = DefaultBadger(componentName, context)
             if (launcherBadger.isSupported(context)) {
                 badger = launcherBadger
             }

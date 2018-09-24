@@ -11,7 +11,7 @@ import android.support.annotation.NonNull
 import java.lang.Exception
 
 
-class SamsungBadger(compName: ComponentName) : DefaultBadger(compName) {
+class SamsungBadger(compName: ComponentName, con: Context) : DefaultBadger(compName, con) {
 
     override fun showBadge(context: Context, count: Int) {
         if (Util.hasLollipop()) {
