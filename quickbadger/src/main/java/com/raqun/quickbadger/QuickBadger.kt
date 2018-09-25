@@ -30,6 +30,13 @@ object QuickBadger {
     fun provideBadger(context: Context): Badger? {
 
         /**
+         * Returns if there's already a valid badger provided
+         */
+        if (badger != null) {
+            return badger
+        }
+
+        /**
          * Check if we reached to max provide attemt count
          */
         if (provideAttemptCount >= MAX_PROVIDE_ATTEMPT_COUNT) {
