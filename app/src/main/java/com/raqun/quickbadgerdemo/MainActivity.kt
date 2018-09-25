@@ -12,8 +12,15 @@ class MainActivity : AppCompatActivity() {
 
         /**
          * Quick Badger Usage
+         * Shows a Badge with number 10
          */
 
-        QuickBadger.provideBadger(this)?.showBadge( 10)
+        QuickBadger.provideBadger(this)?.showBadge(10)
+
+        /**
+         * Dismiss Badge Example
+         */
+
+        QuickBadger.provideBadger(this)?.dismissBadge()
     }
 }
