@@ -11,6 +11,13 @@ To dismiss badge
 ```
 QuickBadger.provideBadger(this)?.dismissBadge()
 ```
+
+To use your custom Badger implementations
+```
+QuickBadger.withCustomBadgers(MyCustomBadger::class)
+           .provideBadger(this)?.showBadge(5)
+```
+
 ## Dependency
 <b>Step 1:</b> Add it in your root build.gradle at the end of repositories.
 
@@ -27,7 +34,7 @@ allprojects {
 
 ```
 	dependencies {
-	        implementation 'com.github.savepopulation:quick-badger:1.0.0'
+	       	implementation 'com.github.savepopulation:quick-badger:1.0.1'
 	}
 ```
 
