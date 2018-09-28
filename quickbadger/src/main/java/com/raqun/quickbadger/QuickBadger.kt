@@ -106,7 +106,8 @@ object QuickBadger {
     }
 
     @Synchronized
-    fun withCustomBadgers(vararg customBadgers: KClass<out Badger>) {
+    fun withCustomBadgers(vararg customBadgers: KClass<out Badger>): QuickBadger {
         supportedBadgers.addAll(customBadgers)
+        return this
     }
 }

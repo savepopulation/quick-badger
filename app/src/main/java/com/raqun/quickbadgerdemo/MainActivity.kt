@@ -22,5 +22,11 @@ class MainActivity : AppCompatActivity() {
          */
 
         QuickBadger.provideBadger(this)?.dismissBadge()
+
+        /**
+         * Custom Badger Example
+         */
+        QuickBadger.withCustomBadgers(MyCustomBadger::class)
+                .provideBadger(this)?.showBadge(5)
     }
 }
