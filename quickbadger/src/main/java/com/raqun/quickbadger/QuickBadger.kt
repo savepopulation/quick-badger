@@ -14,7 +14,7 @@ object QuickBadger {
 
     private const val TAG = "QuickBadger"
     private const val RESOLVER_SUFFIX = "resolver"
-    private const val MAX_PROVIDE_ATTEMPT_COUNT = 2
+    private const val MAX_PROVIDE_ATTEMPT_COUNT = 1
 
     private val supportedBadgers: List<KClass<out Badger>> = listOf(SamsungBadger::class,
             LgBadger::class,
