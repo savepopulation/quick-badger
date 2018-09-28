@@ -16,7 +16,7 @@ object QuickBadger {
     private const val RESOLVER_SUFFIX = "resolver"
     private const val MAX_PROVIDE_ATTEMPT_COUNT = 1
 
-    private val supportedBadgers: List<KClass<out Badger>> = listOf(SamsungBadger::class,
+    private val supportedBadgers: MutableList<KClass<out Badger>> = mutableListOf(SamsungBadger::class,
             LgBadger::class,
             HuaweiBadger::class,
             SonyBadger::class)
@@ -103,5 +103,10 @@ object QuickBadger {
         }
 
         return badger
+    }
+
+    @Synchronized
+    fun withCustomBadgers(vararg customBadgers: KClass<out Badger>) {
+        supportedBadgers.addAll(customBadgers)
     }
 }
