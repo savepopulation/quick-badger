@@ -15,7 +15,8 @@ QuickBadger.provideBadger(this)?.dismissBadge()
 To use your custom Badger implementations
 ```
 QuickBadger.withCustomBadgers(MyCustomBadger::class)
-           .provideBadger(this)?.showBadge(5)
+           .provideBadger(this)?
+	   .showBadge(5)
 ```
 
 ## Dependency
