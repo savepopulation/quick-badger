@@ -1,16 +1,15 @@
 package com.raqun.quickbadger.impl
 
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import com.raqun.quickbadger.util.Util
-import android.content.ContentValues
-import android.support.annotation.NonNull
-import java.lang.Exception
 
 
-class SamsungBadger(compName: ComponentName, con: Context) : DefaultBadger(compName, con) {
+class SamsungBadger(compName: ComponentName? = null,
+                    con: Context? = null) : DefaultBadger(compName, con) {
 
     override fun showBadge(count: Int) {
         if (Util.hasLollipop()) {
@@ -19,26 +18,28 @@ class SamsungBadger(compName: ComponentName, con: Context) : DefaultBadger(compN
             val contentUri = Uri.parse(CONTENT_URI_STRING)
             var cursor: Cursor? = null
             try {
-                cursor = context.contentResolver.query(contentUri,
+                if (context == null) return
+                cursor = context!!.contentResolver.query(contentUri,
                         CONTENT_PROJECTION,
                         "package=?",
-                        arrayOf(componentName.packageName),
+                        arrayOf(componentName?.packageName),
                         null)
 
                 cursor?.let {
                     var isEntryActivityExists = false
                     while (cursor.moveToNext()) {
                         val id = cursor.getInt(0)
-                        val contentValues = getContentValues(componentName, count, false)
-                        context.contentResolver.update(contentUri, contentValues, "_id=?", arrayOf(id.toString()))
-                        if (componentName.className == cursor.getString(cursor.getColumnIndex(CLASS_COLUMN))) {
+                        if (componentName == null) return
+                        val contentValues = getContentValues(componentName!!, count, false)
+                        context!!.contentResolver.update(contentUri, contentValues, "_id=?", arrayOf(id.toString()))
+                        if (componentName!!.className == cursor.getString(cursor.getColumnIndex(CLASS_COLUMN))) {
                             isEntryActivityExists = true
                         }
                     }
 
                     if (!isEntryActivityExists) {
-                        val contentValues = getContentValues(componentName, count, true)
-                        context.contentResolver.insert(contentUri, contentValues)
+                        val contentValues = getContentValues(componentName!!, count, true)
+                        context!!.contentResolver.insert(contentUri, contentValues)
                     }
                 }
             } catch (e: Exception) {

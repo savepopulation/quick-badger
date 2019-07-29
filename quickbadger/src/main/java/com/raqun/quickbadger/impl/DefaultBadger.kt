@@ -10,20 +10,24 @@ import java.util.*
 /**
  * A default Badger impl for unsupported launchers
  */
-open class DefaultBadger(compName: ComponentName, con: Context) : Badger {
+open class DefaultBadger(compName: ComponentName? = null,
+                         con: Context? = null) : Badger {
 
     protected var componentName = compName
-    protected var context = con.applicationContext!!
+    protected var context = con?.applicationContext
 
     override fun showBadge(count: Int) {
+
+        if (context == null) return
+
         val badgeIntent = Intent(INTENT_ACTION).apply {
-            putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName.className)
-            putExtra(INTENT_EXTRA_PACKAGENAME, componentName.packageName)
+            putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName?.className)
+            putExtra(INTENT_EXTRA_PACKAGENAME, componentName?.packageName)
             putExtra(INTENT_EXTRA_BADGE_COUNT, count)
         }
 
-        if (context.canResolveBroadcast(badgeIntent)) {
-            context.sendBroadcast(badgeIntent)
+        if (context!!.canResolveBroadcast(badgeIntent)) {
+            context!!.sendBroadcast(badgeIntent)
         }
     }
 

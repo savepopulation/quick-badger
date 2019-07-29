@@ -8,17 +8,19 @@ import com.raqun.quickbadger.Badger
 import com.raqun.quickbadger.ext.isMainLooper
 import com.raqun.quickbadger.ext.providerExists
 
-class SonyBadger(compName: ComponentName, con: Context) : Badger {
+class SonyBadger(compName: ComponentName? = null,
+                 con: Context? = null) : Badger {
 
-    private var componentName: ComponentName = compName
-    private var context: Context = con.applicationContext
+    private var componentName: ComponentName? = compName
+    private var context: Context? = con?.applicationContext
 
     override fun showBadge(count: Int) {
-        val contentValues = createContentValues(componentName, count)
-        if (context.providerExists(SONY_HOME_PROVIDER_NAME)) {
-            showBadgeWithContentProvider(context, contentValues)
+        if (componentName == null || context == null) return
+        val contentValues = createContentValues(componentName!!, count)
+        if (context!!.providerExists(SONY_HOME_PROVIDER_NAME)) {
+            showBadgeWithContentProvider(context!!, contentValues)
         } else {
-            showBadgeWithBroadcast(context, count)
+            showBadgeWithBroadcast(context!!, count)
         }
     }
 
@@ -57,8 +59,8 @@ class SonyBadger(compName: ComponentName, con: Context) : Badger {
 
     private fun showBadgeWithBroadcast(context: Context, count: Int) =
             context.sendBroadcast(Intent(INTENT_ACTION).apply {
-                putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName.className)
-                putExtra(INTENT_EXTRA_PACKAGE_NAME, componentName.packageName)
+                putExtra(INTENT_EXTRA_ACTIVITY_NAME, componentName?.className)
+                putExtra(INTENT_EXTRA_PACKAGE_NAME, componentName?.packageName)
                 putExtra(INTENT_EXTRA_SHOW_MESSAGE, count > 0)
                 putExtra(INTENT_EXTRA_MESSAGE, count.toString())
             })

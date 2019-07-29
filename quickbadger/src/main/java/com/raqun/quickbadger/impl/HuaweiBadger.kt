@@ -7,23 +7,24 @@ import android.os.Bundle
 import com.raqun.quickbadger.Badger
 
 
-class HuaweiBadger(compName: ComponentName, con: Context) : Badger {
+class HuaweiBadger(compName: ComponentName? = null,
+                   con: Context? = null) : Badger {
 
     private var componentName = compName
         get() = componentName
 
-    private var context = con.applicationContext
+    private var context = con?.applicationContext
         get() = context
 
     override fun showBadge(count: Int) {
         val localBundle = Bundle().apply {
-            putString(BUNDLE_PACKAGE, componentName.packageName)
-            putString(BUNDLE_CLASS, componentName.className)
+            putString(BUNDLE_PACKAGE, componentName?.packageName)
+            putString(BUNDLE_CLASS, componentName?.className)
             putInt(BUNDLE_BADGE_NUMBER, count)
         }
 
         try {
-            context.contentResolver.call(Uri.parse(HUAWEI_LAUNCHER_URI), HUAWEI_BADGE_ACTION, null, localBundle)
+            context?.contentResolver?.call(Uri.parse(HUAWEI_LAUNCHER_URI), HUAWEI_BADGE_ACTION, null, localBundle)
         } catch (e: Exception) {
             //ignored
         }
