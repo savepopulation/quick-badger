@@ -8,6 +8,7 @@ import com.raqun.quickbadger.Badger
 import com.raqun.quickbadger.ext.isMainLooper
 import com.raqun.quickbadger.ext.providerExists
 
+@Deprecated("Causes crash in Sony devices")
 class SonyBadger(compName: ComponentName? = null,
                  con: Context? = null) : Badger {
 
