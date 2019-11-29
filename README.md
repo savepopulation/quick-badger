@@ -35,7 +35,7 @@ allprojects {
 
 ```
 	dependencies {
-	       	implementation 'com.github.savepopulation:quick-badger:1.0.2'
+	       	implementation 'com.github.savepopulation:quick-badger:1.0.3'
 	}
 ```
 
