@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import android.util.Log
 import com.raqun.quickbadger.ext.isBadgerValid
 import com.raqun.quickbadger.ext.isSupported
-import com.raqun.quickbadger.impl.*
+import com.raqun.quickbadger.impl.DefaultBadger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -16,10 +16,7 @@ object QuickBadger {
     private const val RESOLVER_SUFFIX = "resolver"
     private const val MAX_PROVIDE_ATTEMPT_COUNT = 1
 
-    private val supportedBadgers: MutableList<KClass<out Badger>> = mutableListOf(
-            SamsungBadger::class,
-            LgBadger::class,
-            HuaweiBadger::class)
+    private val supportedBadgers: MutableList<KClass<out Badger>> = mutableListOf()
 
     private var badger: Badger? = null
 
@@ -27,28 +24,34 @@ object QuickBadger {
     private var provideAttemptCount = 0
 
     @Synchronized
+    fun withBadgers(vararg badgers: KClass<out Badger>): QuickBadger {
+        supportedBadgers.addAll(badgers)
+        return this
+    }
+
+    @Synchronized
     fun provideBadger(context: Context): Badger? {
 
-        /**
+        /*
          * Returns if there's already a valid badger provided
          */
         if (badger != null) {
             return badger
         }
 
-        /**
+        /*
          * Check if we reached to max provide attemt count
          */
         if (provideAttemptCount >= MAX_PROVIDE_ATTEMPT_COUNT) {
             return badger
         }
 
-        /**
+        /*
          * Increase attempt count
          */
         provideAttemptCount++
 
-        /**
+        /*
          * Check if there's a launcher intent for package.
          */
         val launcherIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
@@ -57,7 +60,7 @@ object QuickBadger {
             return badger
         }
 
-        /**
+        /*
          * Check ResolveInfo and Type
          */
         val componentName = launcherIntent.component
@@ -70,7 +73,7 @@ object QuickBadger {
             return badger
         }
 
-        /**
+        /*
          * Tries to instantiate a Badger from supported device badgers.
          */
         val currentHomePackage = resolveInfo.activityInfo.packageName
@@ -92,7 +95,7 @@ object QuickBadger {
             }
         }
 
-        /**
+        /*
          * If cannot instantiate check if default badger is supported and return it.
          */
         if (badger == null) {
@@ -103,11 +106,5 @@ object QuickBadger {
         }
 
         return badger
-    }
-
-    @Synchronized
-    fun withCustomBadgers(vararg customBadgers: KClass<out Badger>): QuickBadger {
-        supportedBadgers.addAll(customBadgers)
-        return this
     }
 }
