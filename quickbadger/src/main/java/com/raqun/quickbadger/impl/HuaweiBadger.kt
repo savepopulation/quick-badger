@@ -6,15 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import com.raqun.quickbadger.Badger
 
-
+@Deprecated("Causes crash on HuaweiDevices")
 class HuaweiBadger(compName: ComponentName? = null,
                    con: Context? = null) : Badger {
 
     private var componentName = compName
-        get() = componentName
-
     private var context = con?.applicationContext
-        get() = context
 
     override fun showBadge(count: Int) {
         val localBundle = Bundle().apply {
