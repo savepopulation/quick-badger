@@ -2,10 +2,10 @@
 A library to show notification badges on app launchers which targets lower Android Sdks
 
 ## How to?
-To show a badge on launcher:
+To show a badge on launcher first add device badger classes that you want to support:
 ```
-QuickBadger.provideBadger(this)?.showBadge( 10)
-```
+QuickBadger.withBadgers(SamsungBadger::class)
+                .provideBadger(this)?.showBadge(5)```
 
 To dismiss badge
 ```
@@ -14,7 +14,7 @@ QuickBadger.provideBadger(this)?.dismissBadge()
 
 To use your custom Badger implementations
 ```
-QuickBadger.withCustomBadgers(MyCustomBadger::class)
+QuickBadger.withBadgers(MyCustomBadger::class)
            .provideBadger(this)?
 	   .showBadge(5)
 ```
