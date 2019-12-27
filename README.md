@@ -5,7 +5,8 @@ A library to show notification badges on app launchers which targets lower Andro
 To show a badge on launcher first add device badger classes that you want to support:
 ```
 QuickBadger.withBadgers(SamsungBadger::class)
-                .provideBadger(this)?.showBadge(5)```
+                .provideBadger(this)?.showBadge(5)
+```
 
 To dismiss badge
 ```
@@ -35,7 +36,7 @@ allprojects {
 
 ```
 	dependencies {
-	       	implementation 'com.github.savepopulation:quick-badger:1.0.3'
+	       	implementation 'com.github.savepopulation:quick-badger:1.0.4'
 	}
 ```
 
